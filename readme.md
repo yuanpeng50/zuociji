@@ -54,7 +54,8 @@ np.save('embedding.npy', final_embeddings)
 代码请使用本作业提供的代码。学员需要实现RNN网络部分,RNN数据处理部分和RNN训练部分。
 - train.py 训练 -20分
 - utils.py 数据处理 -20分
-- model.py 网络 - 20分
+- model.py 网络 -20分
+- 文档描述 -40分
 
 #### 作业评价标准
 训练的输出log输出中可以看到下述内容
