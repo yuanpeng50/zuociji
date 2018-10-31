@@ -93,7 +93,7 @@ class Model():
         with tf.variable_scope('softmax'):
             ##################
             # Your Code here
-             W = tf.get_variable('W', [128, self.num_words], 
+            W = tf.get_variable('W', [128, self.num_words], 
                                 initializer=tf.random_normal_initializer(stddev=0.01))
             bias = tf.get_variable('b', [self.num_words], initializer=tf.constant_initializer(0.0))
             logits = tf.matmul(seq_output_final, W) + bias
