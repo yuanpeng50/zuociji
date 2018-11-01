@@ -27,9 +27,8 @@ def index_data(sentences, dictionary):
     return index.reshape(shape)
 
 
-def get_train_data(vocabulary, batch_size, num_steps):
-    ##################
-    # Your Code here
+def get_train_data(vocabulary, dictionary, batch_size, num_steps):
+    ################## Your Code here
     data_size = len(vocabulary)
     data_partition_size = data_size // batch_size
 
@@ -49,7 +48,6 @@ def get_train_data(vocabulary, batch_size, num_steps):
         x = data_x[:, i * num_steps:(i + 1) * num_steps]
         y = data_y[:, i * num_steps:(i + 1) * num_steps]
         yield (x, y)
-    ##################
 
 
 def build_dataset(words, n_words):
@@ -69,4 +67,3 @@ def build_dataset(words, n_words):
     count[0][1] = unk_count
     reversed_dictionary = dict(zip(dictionary.values(), dictionary.keys()))
     return data, count, dictionary, reversed_dictionary
-
