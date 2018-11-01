@@ -5,7 +5,6 @@ import collections
 import random
 
 import numpy as np
-import json
 
 
 def read_data(filename):
@@ -24,30 +23,32 @@ def index_data(sentences, dictionary):
             index[i] = dictionary[sentences[i]]
         except KeyError:
             index[i] = dictionary['UNK']
+
     return index.reshape(shape)
 
 
 def get_train_data(vocabulary, dictionary, batch_size, num_steps):
-    ################## Your Code here
+    print('=-===-=-=-=--=')
     data_size = len(vocabulary)
     data_partition_size = data_size // batch_size
-
     raw_x = index_data(vocabulary, dictionary)
-    raw_y = index_data(vocabulary[1:], dictionary)
-    raw_y[-1] = len(dictionary) - 1
 
+    raw_y = index_data(vocabulary[1:], dictionary)
+    print('len(dictionary)-1', len(dictionary)-1)
+    raw_y[-1] = len(dictionary)-1
+    print('len(dictionary)-1', len(dictionary)-1)
     data_x = np.zeros([batch_size, data_partition_size], dtype=np.int32)
     data_y = np.zeros([batch_size, data_partition_size], dtype=np.int32)
-
     for i in range(batch_size):
-        data_x[i] = raw_x[data_partition_size * i:data_partition_size * (i + 1)]
-        data_y[i] = raw_y[data_partition_size * i:data_partition_size * (i + 1)]
+        data_x[i] = raw_x[data_partition_size*i : data_partition_size*(i+1)]
+        data_y[i] = raw_y[data_partition_size*i : data_partition_size*(i+1)]
 
-    epoch_size = data_partition_size // num_steps
+    seq_length = num_steps
+    epoch_size = data_partition_size // seq_length
     for i in range(epoch_size):
-        x = data_x[:, i * num_steps:(i + 1) * num_steps]
-        y = data_y[:, i * num_steps:(i + 1) * num_steps]
-        yield (x, y)
+        x = data_x[:, seq_length*i : seq_length*(i+1)]
+        y = data_y[:, seq_length*i : seq_length*(i+1)]
+        yield(x, y)
 
 
 def build_dataset(words, n_words):
